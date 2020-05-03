@@ -7,7 +7,7 @@ __config: Optional[OmegaConf] = None
 
 def get_state():
     if __config is None:
-        __state = OmegaConf().load("config")
+        __state = OmegaConf().load("config.yaml")
     return __config
 
 
