@@ -1,36 +1,21 @@
 import random
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from copy import copy
-from typing import List, Dict
 
 from vk_api import VkApi
-from vk_api.longpoll import Event, VkEventType
-from yapsy.IPlugin import IPlugin
+from vk_api.longpoll import Event
 
 
-class ILongPollPlugin(IPlugin):
+class LongPollPlugin(ABC):
     def __init__(self, api: VkApi):
         super().__init__()
         self.api = api
         self.commands = {}
         self.event_handlers = []
 
-    def command(self, cmd):
-        def wrap(func):
-            def a(*args, **kwargs):
-                self.commands[cmd] = func
-        return wrap
-
-    def event(self, cmd):
-        def wrap(func):
-            def a(*args, **kwargs):
-                self.event_handlers.append(func)
-        return wrap
-
     @abstractmethod
     def on_event(self, event: Event):
         pass
-
 
     def answer(self, event: Event, message: str):
         data = copy(event.__dict__)

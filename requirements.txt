@@ -1,3 +1,4 @@
+omegaconf
 typer
 vk_api
 yapsy
