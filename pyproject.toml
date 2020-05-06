@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nicevk"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["nm17 <dannevergame@gmail.com>"]
 
@@ -12,6 +12,9 @@ python-dotenv = "^0.13.0"
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
 
+[tool.poetry.scripts]
+nicevk = 'nicevk:cli.run'
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
