@@ -23,7 +23,7 @@ class NoBotMiddleware(Middleware):
             return False
 
 
-state_file = (nicevk_folder / "state.json")
+state_file = nicevk_folder / "state.json"
 state_file.touch(exist_ok=True)
 state = json.loads(state_file.read_text("utf-8") or "{}")
 
