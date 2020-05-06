@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nicevk"
-version = "0.2.0"
+version = "0.3.0"
 description = ""
 authors = ["nm17 <dannevergame@gmail.com>"]
 
@@ -8,6 +8,7 @@ authors = ["nm17 <dannevergame@gmail.com>"]
 python = "^3.8"
 vkbottle = "^2.7.2"
 python-dotenv = "^0.13.0"
+wget = "^3.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
