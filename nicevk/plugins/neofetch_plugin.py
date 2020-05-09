@@ -15,7 +15,3 @@ async def help_(ans: Message):
     )
 
     await ans.api.messages.edit(ans.peer_id, ans.id, rst.stdout.decode("utf-8"))
-
-@user.on.message_handler(text=".apt <package>")
-async def apt(ans: Message):
-    rst = subprocess.call(["apt"])
