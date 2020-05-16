@@ -1,3 +1,5 @@
+import asyncio
+from functools import wraps
 from pathlib import Path
 
 from loguru import logger
@@ -18,11 +20,27 @@ user = User(env["TOKEN"])
 
 commands = [".help"]
 
+user_id = None
+
+
+def coro(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        return asyncio.run(f(*args, **kwargs))
+
+    return wrapper
+
+
+@coro
+async def set_user_id():
+    global user_id
+    user_id = (await user.api.users.get())[0].id
+
 
 @user.middleware.middleware_handler()
 class NoBotMiddleware(Middleware):
     async def middleware(self, message: Message):
-        return message.from_id == (await message.api.users.get())[0].id
+        return message.from_id == user_id
 
 
 rucaptcha = aioImageCaptcha(rucaptcha_key=env.get("RUCAPTCHA_TOKEN", ""))

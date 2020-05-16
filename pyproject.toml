@@ -6,7 +6,7 @@ authors = ["nm17 <dannevergame@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-vkbottle = "^2.7.2"
+vkbottle = {git = "https://github.com/timoniq/vkbottle.git"}
 python-dotenv = "^0.13.0"
 wget = "^3.2"
 psutil = "^5.7.0"
