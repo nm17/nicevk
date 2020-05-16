@@ -6,7 +6,7 @@ from pathlib import Path
 
 import psutil
 
-from nicevk.api import nicevk_folder, user, env, solve_captcha, logger, coro, set_user_id
+from nicevk.api import nicevk_folder, user, env, solve_captcha, logger, coro
 
 from runpy import run_path
 
@@ -28,10 +28,8 @@ def run():
     if env.get("RUCAPTCHA_TOKEN", None) is not None:
         user.error_handler.add_error_handler(14, solve_captcha)
 
-
-
     user.run_polling()
 
+
 if __name__ == '__main__':
-    set_user_id()
     run()

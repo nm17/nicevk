@@ -20,8 +20,6 @@ user = User(env["TOKEN"])
 
 commands = [".help"]
 
-user_id = None
-
 
 def coro(f):
     @wraps(f)
@@ -31,16 +29,10 @@ def coro(f):
     return wrapper
 
 
-@coro
-async def set_user_id():
-    global user_id
-    user_id = (await user.api.users.get())[0].id
-
-
 @user.middleware.middleware_handler()
 class NoBotMiddleware(Middleware):
     async def middleware(self, message: Message):
-        return message.from_id == user_id
+        return message.from_id == (await user.api.users.get())[0].id
 
 
 rucaptcha = aioImageCaptcha(rucaptcha_key=env.get("RUCAPTCHA_TOKEN", ""))
