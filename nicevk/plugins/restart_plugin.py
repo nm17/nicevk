@@ -4,17 +4,9 @@ from functools import wraps
 
 from vkbottle import Message, VKError
 
-from nicevk.api import user, commands, state, save_state
+from nicevk.api import user, commands, state, save_state, coro
 
 commands.append(".restart - restart nicevk")
-
-
-def coro(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        return asyncio.run(f(*args, **kwargs))
-
-    return wrapper
 
 
 @coro
