@@ -17,6 +17,7 @@ async def afk(ans: Message, reason: str):
     if reason is not None:
         state["afk"]["reason"] = reason
     state["afk"]["time"] = time.time()
+    state["afk"]["mentioned"] = []
     save_state()
     await ans.api.messages.edit(
         ans.peer_id,
@@ -29,7 +30,11 @@ async def afk(ans: Message):
     if "afk" not in state.keys(): # Using unafk without afk
         state["afk"] = {}
     state["afk"]["status"] = False
-    del state["afk"]["time"]
+    try:
+        del state["afk"]["time"]
+        del state["afk"]["mentioned"]
+    except KeyError:
+        pass
     save_state()
     await ans.api.messages.edit(
         ans.peer_id,
