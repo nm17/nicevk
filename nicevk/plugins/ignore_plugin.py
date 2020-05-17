@@ -1,6 +1,7 @@
 from vkbottle import Message
 
 from nicevk.api import user, commands, state, save_state
+from nicevk.utils import edit
 
 commands.extend(
     [
@@ -22,7 +23,7 @@ async def help_(ans: Message, username: str):
         ).object_id,
     ]
     save_state()
-    await ans.api.messages.edit(ans.peer_id, ans.id, "User ignored")
+    await edit(ans, "User ignored")
 
 
 @user.on.message_handler(text=".rm-ignore <username>")
@@ -41,9 +42,9 @@ async def help_(ans: Message, username: str):
             )
         ]
     except ValueError:
-        await ans.api.messages.edit(ans.peer_id, ans.id, "That user is not muted")
+        await edit(ans, "That user is not muted")
     else:
-        await ans.api.messages.edit(ans.peer_id, ans.id, "User removed from ignore")
+        await edit(ans, "User removed from ignore")
     finally:
         save_state()
 

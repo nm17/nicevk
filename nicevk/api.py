@@ -32,7 +32,7 @@ def coro(f):
 @user.middleware.middleware_handler()
 class NoBotMiddleware(Middleware):
     async def middleware(self, message: Message):
-        return message.from_id == (await user.api.users.get())[0].id
+        return message.from_id == user.user_id
 
 
 rucaptcha = aioImageCaptcha(rucaptcha_key=env.get("RUCAPTCHA_TOKEN", ""))
@@ -47,10 +47,17 @@ async def solve_captcha(e: VKError):
             print(e.method_requested)
             print(e.params_requested)
             print(e.raw_error)
-            await user.api.api(method="messages.edit", params={**e.params_requested, "captcha_key": resp['captchaSolve'], "captcha_sid": captcha_sid})
+            await user.api.api(
+                method="messages.edit",
+                params={
+                    **e.params_requested,
+                    "captcha_key": resp["captchaSolve"],
+                    "captcha_sid": captcha_sid,
+                },
+            )
             return
         else:
-            raise CaptchaError(resp['errorBody']['text'])
+            raise CaptchaError(resp["errorBody"]["text"])
 
 
 state_file = nicevk_folder / "state.json"
