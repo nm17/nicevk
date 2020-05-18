@@ -2,12 +2,8 @@ from vkbottle import Message
 from nicevk.api import user, commands, state, save_state
 import time
 
-commands.extend(
-    [
-        ".afk [reason] - makes you afk",
-        ".unafk - seems like you are here"
-    ]
-)
+commands.extend([".afk [reason] - makes you afk", ".unafk - seems like you are here"])
+
 
 @user.on.message_handler(text=".afk <reason>")
 async def afk(ans: Message, reason: str):
@@ -19,15 +15,12 @@ async def afk(ans: Message, reason: str):
     state["afk"]["time"] = time.time()
     state["afk"]["mentioned"] = []
     save_state()
-    await ans.api.messages.edit(
-        ans.peer_id,
-        ans.id,
-        "I will be back"
-    )
+    await ans.api.messages.edit(ans.peer_id, ans.id, "I will be back")
 
-@user.on.message_handler(text=".unafk")    
+
+@user.on.message_handler(text=".unafk")
 async def afk(ans: Message):
-    if "afk" not in state.keys(): # Using unafk without afk
+    if "afk" not in state.keys():  # Using unafk without afk
         state["afk"] = {}
     state["afk"]["status"] = False
     try:
@@ -36,9 +29,4 @@ async def afk(ans: Message):
     except KeyError:
         pass
     save_state()
-    await ans.api.messages.edit(
-        ans.peer_id,
-        ans.id,
-        "I am back"
-    )
-
+    await ans.api.messages.edit(ans.peer_id, ans.id, "I am back")

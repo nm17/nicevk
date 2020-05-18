@@ -24,3 +24,7 @@ def run():
             run_path(str(file))
 
     user.run_polling()
+
+
+if __name__ == '__main__':
+    run()
