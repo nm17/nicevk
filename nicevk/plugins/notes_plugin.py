@@ -1,6 +1,7 @@
 from vkbottle import Message
 
 from nicevk.api import user, commands, state, save_state
+from nicevk.utils import edit
 
 commands.extend(
     [
@@ -26,8 +27,8 @@ async def get_notes(ans: Message, name: str):
         state["notes"] = {}
         save_state()
     if name in state["notes"].keys():
-        await ans.api.messages.edit(
-            ans.peer_id, ans.id, f"Note '{name}'\n\n{state['notes'][name]}"
+        await edit(
+            ans, f"Note '{name}'\n\n{state['notes'][name]}"
         )
     else:
         await ans.api.messages.edit(ans.peer_id, ans.id, f"Note '{name}' is not found")
