@@ -1,9 +1,8 @@
 import asyncio
 import subprocess
+
 from functools import wraps
-
 from vkbottle import Message, VKError
-
 from nicevk.api import user, commands, state, save_state, coro
 
 commands.append(".restart - restart nicevk")

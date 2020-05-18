@@ -6,4 +6,7 @@ from nicevk.utils import edit
 
 @user.on.message_handler(text=".help")
 async def help_(ans: Message):
-    await edit(ans, "Available commands:\n\n" + "\n".join(commands))
+    await edit(
+        ans.peer_id, ans.id,
+        "Available commands:\n\n" + "\n".join(commands)
+    )
