@@ -14,10 +14,9 @@ commands.extend(
 
 @user.on.message_handler(text=".notes")
 async def list_notes(ans: Message):
-    await ans.api.messages.edit(
-        ans.peer_id,
-        ans.id,
-        f"Available notes:\n\n" + "\n".join(state.get("notes", {}).keys()),
+    await edit(
+        ans.peer_id, ans.id,
+        f"Available notes:\n\n" + "\n".join(state.get("notes", {}).keys())
     )
 
 
@@ -28,7 +27,8 @@ async def get_notes(ans: Message, name: str):
         save_state()
     if name in state["notes"].keys():
         await edit(
-            ans, f"Note '{name}'\n\n{state['notes'][name]}"
+            ans.peer_id, ans.id,
+            f"Note '{name}'\n\n{state['notes'][name]}"
         )
     else:
         await ans.api.messages.edit(ans.peer_id, ans.id, f"Note '{name}' is not found")
@@ -39,5 +39,8 @@ async def save_notes(ans: Message, name: str, text: str):
     if "notes" not in state.keys():
         state["notes"] = {}
     state["notes"][name] = text
-    await ans.api.messages.edit(ans.peer_id, ans.id, f"Note '{name}' saved!")
+    await edit(
+        ans.peer_id, ans.id,
+        f"Note '{name}' saved!"
+    )
     save_state()

@@ -23,7 +23,7 @@ async def help_(ans: Message, username: str):
         ).object_id,
     ]
     save_state()
-    await edit(ans, "User ignored")
+    await edit(ans.peer_id, ans.id, "User ignored")
 
 
 @user.on.message_handler(text=".rm-ignore <username>")
@@ -42,14 +42,14 @@ async def help_(ans: Message, username: str):
             )
         ]
     except ValueError:
-        await edit(ans, "That user is not muted")
+        await edit(ans.peer_id, ans.id, "That user is not muted")
     else:
-        await edit(ans, "User removed from ignore")
+        await edit(ans.peer_id, ans.id, "User removed from ignore")
     finally:
         save_state()
 
 
 @user.on.message_handler()
-async def middleware(message: Message):
-    if message.from_id in state.get("ignore", []):
-        await message.api.messages.delete([message.id])
+async def middleware(ans: Message):
+    if ans.from_id in state.get("ignore", []):
+        await ans.api.messages.delete(message_ids=ans.id)

@@ -1,12 +1,9 @@
-from datetime import datetime
-
-from vkbottle import Message
-
-from nicevk.api import user, commands, nicevk_folder
-
 import wget
-
 import runpy
+
+from datetime import datetime
+from vkbottle import Message
+from nicevk.api import user, commands, nicevk_folder
 
 commands.append(".dl_mod <url> - download and execute plugin")
 
@@ -19,7 +16,6 @@ async def help_(ans: Message, url: str):
         nicevk_folder / f"module_{datetime.now().isoformat().replace('.', ' ')}.py"
     )
     wget.download(url.strip(), out=out_path)
-
     runpy.run_path(out_path)
 
     await ans.api.messages.edit(

@@ -1,14 +1,13 @@
 import asyncio
+import dotenv
+import json
+
 from functools import wraps
 from pathlib import Path
-
 from loguru import logger
 from python_rucaptcha.ImageCaptcha import ImageCaptcha, aioImageCaptcha
 from vkbottle import User, Message, VKError
-import dotenv
 from vkbottle.framework import Middleware
-import json
-
 from nicevk.errors import CaptchaError
 
 
